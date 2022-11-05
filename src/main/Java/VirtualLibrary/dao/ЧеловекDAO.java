@@ -47,4 +47,9 @@ public class ЧеловекDAO {
         return jdbcTemplate.query("select * from book where person_id=?;", new Object[]{id},
                 new BeanPropertyRowMapper<>(Книга.class));
     }
+
+    public Optional<Человек> getPersonByFullName (String name) {
+        return jdbcTemplate.query("select * from person where person fullname = ?", new Object[]{name},
+                new BeanPropertyRowMapper<>(Человек.class)).stream().findAny();
+    }
 }

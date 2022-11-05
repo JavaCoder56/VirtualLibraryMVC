@@ -45,6 +45,7 @@ public class ЧеловекController {
 
     @PostMapping()
     public String create(@ModelAttribute("person") @Valid Человек person, BindingResult bindingResult) {
+        personValidator.validate(person,bindingResult);
         if(bindingResult.hasErrors()) {
             return "people/new";
         }
@@ -67,6 +68,7 @@ public class ЧеловекController {
     @PatchMapping("/{id}")
     public String update(@ModelAttribute ("person") @Valid Человек person, BindingResult bindingResult,
                          @PathVariable("id") int id) {
+        personValidator.validate(person, bindingResult);
         if(bindingResult.hasErrors()) {
             return "people/edit";
         }

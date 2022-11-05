@@ -7,6 +7,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 @Component
 public class PersonValidator implements Validator {
     private final ЧеловекDAO человекDAO;
@@ -24,11 +28,8 @@ public class PersonValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         Человек person = (Человек) o;
-        if(person.getFullName().isEmpty()) {
-            errors.rejectValue("fullName","", "Имя не может быть пустым");
-        }
-        if (person.getFullName().length()<8||person.getFullName().length()>60) {
-            errors.rejectValue("fullName","", "FullName length should be between 8 and 60 characters");
+        if(человекDAO.getPersonByFullName(person.getFullName()).isPresent()) {
+            errors.rejectValue("fullName","", "Человек с таким именем уже существует");
         }
     }
 }
