@@ -49,7 +49,7 @@ public class ЧеловекDAO {
     }
 
     public Optional<Человек> getPersonByFullName (String name) {
-        return jdbcTemplate.query("select * from person where person fullname = ?", new Object[]{name},
+        return jdbcTemplate.query("select * from person where fullname = ?", new Object[]{name},
                 new BeanPropertyRowMapper<>(Человек.class)).stream().findAny();
     }
 }
